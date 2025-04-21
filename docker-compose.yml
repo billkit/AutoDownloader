@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  autodownloader:
+    image: autodownloader:latest
+    container_name: autodownloader
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/data
+    environment:
+      # 下载线程数
+      - THREADS=2
+      # 限制下载速度，单位KB/s
+      - DOWNLOAD_SPEED_LIMIT=10000
+      # 信息打印显示间隔时间，单位为秒
+      - SLEEP_INTERVAL=1
+      - URL_FILE=/data/url.txt
+    restart: unless-stopped
